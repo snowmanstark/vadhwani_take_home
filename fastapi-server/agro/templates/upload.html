@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block section %}
+<section class="about_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="img-box">
+                    <img src="static/images/farmer.png" alt="" />
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="detail-box">
+                    <div class="heading_container">
+                        <h2>
+                            Upload Farmer Data
+                        </h2>
+                    </div>
+                    <p>
+                    Please upload the farmer data as a CSV file.
+                    </p>
+                    <div class="btn-box">
+                        <form id="upload_form" enctype="multipart/form-data" method="post">
+                            <label for="file" class="btn-1" style="padding: 2%;">Upload CSV file</label>
+                            <input type="file" name="file" id="file" onchange="uploadFile()" style="visibility:hidden;" required><br>
+                            <progress id="progressBar" value="0" max="100" style="width: 100%; visibility:hidden;"></progress>
+                            <h5 id="status"></h5>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+function _(el) {
+    return document.getElementById(el);
+}
+
+function uploadFile() {
+    var file = _("file").files[0];
+    console.log(file)
+    // alert(file.name+" | "+file.size+" | "+file.type);
+    var formdata = new FormData();
+    formdata.append("file", file);
+    console.log(formdata)
+    var ajax = new XMLHttpRequest(); 
+    _("progressBar").style = "width: 100%;"
+    ajax.upload.addEventListener("progress", progressHandler, false);
+    ajax.addEventListener("load", completeHandler, false);
+    ajax.addEventListener("error", errorHandler, false);
+    ajax.addEventListener("abort", abortHandler, false);
+    ajax.open("POST", "/upload"); 
+    ajax.send(formdata);
+}
+
+function progressHandler(event) {
+    var percent = (event.loaded / event.total) * 100;
+    _("progressBar").value = Math.round(percent);
+    _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
+}
+
+function completeHandler(event) {
+    _("status").innerHTML = event.target.responseText;
+    _("progressBar").style = "width: 100%; visibility:hidden;"
+    _("progressBar").value = 0; //wil clear progress bar after successful upload
+}
+
+function errorHandler(event) {
+    _("status").innerHTML = "Upload Failed";
+}
+
+function abortHandler(event) {
+    _("status").innerHTML = "Upload Aborted";
+}
+</script>
+{% endblock %}
