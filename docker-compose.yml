@@ -10,6 +10,8 @@ services:
     depends_on:
       - redis-cache
       - db
+    volumes:
+      - ./service-account.json:/app/service-account.json
 
   redis-cache:
     image: redis:latest
@@ -19,8 +21,6 @@ services:
     restart: always
     env_file:
       - .env
-    ports:
-      - 27017:27017
     environment:
       - MONGO_INITDB_DATABASE=app_db
     volumes:

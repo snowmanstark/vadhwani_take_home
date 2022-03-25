@@ -3,7 +3,7 @@ fastapi>=0.68.0,<0.69.0
 google-cloud-translate==3.7.2
 Jinja2==3.0.3
 pydantic>=1.8.0,<2.0.0
-pymongo>=4.0.0
+pymongo[srv]
 python-multipart==0.0.5
 redis >=4.0.0
 requests==2.27.1
