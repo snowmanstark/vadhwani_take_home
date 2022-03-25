@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block section %}
+<section class="about_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <table>
+                <th>
+                    <td>Phone</td>
+                    <td>Name</td>
+                    <td>State</td>
+                    <td>District</td>
+                    <td>Village</td>
+                </th>
+            {% for user in users %}
+                <tr style="font-family: ;">
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.farmer_name }}</td>
+                    <td>{{ user.state_name }}</td>
+                    <td>{{ user.district_name }}</td>
+                    <td>{{ user.village_name }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+            <!-- <div class="col-md-3">
+                <div class="img-box">
+                    <img src="{{ url_for('static', path='/images/farmer.png') }}" alt="" />
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="detail-box">
+                    <div class="heading_container">
+                        <h2>
+                            Upload Farmer Data
+                        </h2>
+                    </div>
+                    <p>
+                    Please upload the farmer data as a CSV file.
+                    </p>
+                    <div class="btn-box">
+                        <form id="upload_form" enctype="multipart/form-data" method="post">
+                            <label for="file" class="btn-1" style="padding: 2%;">Upload CSV file</label>
+                            <input type="file" name="file" id="file" onchange="uploadFile()" style="visibility:hidden;" required><br>
+                            <progress id="progressBar" value="0" max="100" style="width: 100%; visibility:hidden;"></progress>
+                            <h5 id="status"></h5>
+                        </form>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</section>
+{% endblock %}

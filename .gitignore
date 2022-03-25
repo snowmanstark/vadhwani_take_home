@@ -1,2 +1,8 @@
-AIvadhwaniVenv
+.AIvadhwani
 __pycache__
+
+# GCP credentails
+service-account.json
+
+# Local env
+.env

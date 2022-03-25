@@ -1,5 +1,27 @@
 version: "3.8"
 
 services:
-  web: 
+  webserver: 
     build: ./fastapi-server
+    env_file:
+      - .env
+    ports:
+      - 8080:80
+    depends_on:
+      - redis-cache
+      - db
+
+  redis-cache:
+    image: redis:latest
+  
+  db:
+    build: ./mongo
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=app_db
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
